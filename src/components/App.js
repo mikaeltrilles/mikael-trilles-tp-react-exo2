@@ -6,20 +6,18 @@ import FetchUniversities from "../services/FetchUniversities";
 class App extends Component {
   //* Je déclare un state pour stocker les données de l'api
   state = {
-    universities: [
-      {
-        name: "",
-        country: "",
-        web_pages: "",
-      },
-    ],
+    universities: [],
   };
   //* Je récupère le pays choisi dans le select
   handleChangeSelect = (select) => {
-
-    const country = "country=" + select.target.value;
-    console.log("Pays select : " + country);
-    FetchUniversities(country).then((data) => {
+    const countrySelect = "";
+    if (select == false){
+      const countrySelect = "country=null";
+    }else{
+      const countrySelect = "country=" + select.target.value;
+    }
+    console.log("Pays select : " + countrySelect);
+    FetchUniversities(countrySelect).then((data) => {
       this.setState({
         universities: data,
       });
@@ -30,18 +28,33 @@ class App extends Component {
   handleChangeInput = (input) => {
     const search = "name=" + input.target.value;
     console.log("Recherche : " + search);
-    const universities = this.state.universities.filter((elmentTab) =>
-      elmentTab.name.toLowerCase().includes(search.toLowerCase())
-    );
-    console.log("Dans le handleinput" + universities);
-    this.setState({
-      universities: universities,
+    FetchUniversities(search).then((data) => {
+      this.setState({
+        universities: data,
+      });
+      const universities = this.state.universities.filter((elmentTab) =>
+        elmentTab.name.toLowerCase().includes(search.toLowerCase())
+      );
+      // return const copy_state = { ...this.state, universities: universities };
     });
-    // console.log(this.universities.innerText);
+
   };
 
-  //* J'appelle la fonction FetchUniversities pour récupérer les données de l'api
-  componentDidMount() {}
+
+
+  //* Je controler le click sur le bouton afficher
+  // handleOnClickButton = (clickB) => {
+  //   const univTab = this.state.data.map((element) => {
+    // return (<div>
+    //     <h1>{element.name}</h1>
+    //     <h2>{element.country}</h2>
+    //     <h4>{element.web}</h4>
+    //     </div>)
+  //       }
+  //     )}
+   
+  // }
+
 
   //* Je crée un select pour choisir le pays entre : France, Italy, Germany
   render() {
@@ -49,30 +62,23 @@ class App extends Component {
       <>
         <div className="App">
           <select onChange={this.handleChangeSelect}>
-            <option value="">Sélectionnez un Pays</option>
+            <option value="null">Sélectionnez un Pays</option>
             <option value="France">France</option>
             <option value="Italy">Italie</option>
             <option value="Germany">Allemagne</option>
           </select>
           <h1>{this.state.universities.length} Université(s) de trouvée(s)</h1>
         </div>
-
-        {/* je crée un input pour rechercher une université et je controle toujours le nombre de résultat */}
         <div>
-          <input
-            type="text"
-            placeholder="Rechercher une université"
-            onChange={this.handleChangeInput}
-          />
+          <input type="text" placeholder="Rechercher une université" onChange={this.handleChangeInput} />
           <h1>{this.state.universities.length} Université(s) de trouvée(s)</h1>
-          {/* J'affiche un bouton pour voir les resultat de la recherche si il y en a moins de 50 */}
-          {this.state.universities.length < 50 &&
-            this.state.universities.length > 0 && (
-              <button>Voir les résultats</button>
-            )}
+          {(this.state.universities.length < 50 && this.state.universities.length > 0) && <button onClick={this.handleOnClickButton}>Voir les résultats</button>}
         </div>
       </>
-    );
+    )
   }
 }
+
 export default App;
+
+

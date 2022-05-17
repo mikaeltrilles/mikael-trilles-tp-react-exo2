@@ -2,9 +2,10 @@
 //* L’api renvoie un tableau d’objets contenant les informations suivantes:
 
 
-export default async function FetchUniversities() {
-  const response = await fetch(`http://universities.hipolabs.com/search?country=`);
+export default async function FetchUniversities(ville,pays) {
+  const response = await fetch(`http://universities.hipolabs.com/search?${pays}&${ville}`);
   const data = await response.json();
   return data;
 }
+
 
