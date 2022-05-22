@@ -103,34 +103,34 @@ class App extends Component {
 
           {/*Si le resultat sur le fecth est compris entre 1 et 50 et que il y a un click sur le bouton alors on affiche lle tableau des resultats */}
 
-          {(true) &&   (this.state.universities.length < 50 &&
+          {(true) && (this.state.universities.length < 50 &&
             this.state.universities.length > 0) && (
-           
-            <div id="d1" className="table-responsive" style={
-              { display: "none" }
-            } >
-              <table className="table table-striped">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Country</th>
-                    <th scope="col">Web</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.universities.map((university, index) => (
-                    <tr key={index}>
-                      <th scope="row">{index + 1}</th>
-                      <td>{university.name}</td>
-                      <td>{university.country}</td>
-                      <td><a href={university.web_pages[0]}>{university.web_pages[0]}</a></td>
+
+              <div id="d1" className="table-responsive" style={
+                { display: "hidden" ? "none" : "block" }
+              } >
+                <table className="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Country</th>
+                      <th scope="col">Web</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+                  </thead>
+                  <tbody>
+                    {this.state.universities.map((university, index) => (
+                      <tr key={index}>
+                        <th scope="row">{index + 1}</th>
+                        <td>{university.name}</td>
+                        <td>{university.country}</td>
+                        <td><a href={university.web_pages[0]}>{university.web_pages[0]}</a></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
         </div>
       </>
     );
